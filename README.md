@@ -7,12 +7,13 @@ This seeting is based on a script by muzieca found on http://peppermintos.net/vi
 The used background Lua script was also created by londonali1010.
 
 ### Raise conky
-install xkeybind and add the following lines to the .xbindkeysrc
+install xkeybind and add the following lines to the .xbindkeysrc.
 
 ```
-"xset -r && ~/git/spaceship-conky/raise_conky.sh"
+"xset -r && path/to/raise_conky.sh"
   mod4 + s
 
-"~/git/spaceship-conky/decrease_conky.sh && set r"
+"path/to/decrease_conky.sh && set r"
   release + mod4 + s
 ``` 
+xset -r and r is to disable and enable the autorepeat function of the keyboard. If it is disabled anyway, xset is not needed.
