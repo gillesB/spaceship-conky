@@ -205,8 +205,6 @@ corner_r = 35
 --bg_colour=0x000000
 bg_colour = 0x210A01
 bg_alpha = 0.5
-cr = nil
-cs = nil
 
 require 'cairo'
 
@@ -214,16 +212,24 @@ function rgb_to_r_g_b(colour,alpha)
 	return ((colour / 0x10000) % 0x100) / 255., ((colour / 0x100) % 0x100) / 255., (colour % 0x100) / 255., alpha
 end
 
-function conky_init_cairo()
+function conky_cairo_iteration()
 
-	cs=cairo_xlib_surface_create(conky_window.display, conky_window.drawable, conky_window.visual, conky_window.width, conky_window.height)
-   
-	cr=cairo_create(cs)
+	if conky_window==nil then return end
+	
+	local cs=cairo_xlib_surface_create(conky_window.display, conky_window.drawable, conky_window.visual, conky_window.width, conky_window.height)   
+	local cr=cairo_create(cs)
+
+	conky_draw_bg(cr)
+	conky_clock_rings(cr)
+	
+	
+	cairo_surface_destroy(cs)
+	cairo_destroy(cr)
 
 
 end
 
-function draw_ring(cr,percent,setting)
+function draw_ring(cr, percent, setting)
 	local w,h=conky_window.width,conky_window.height
    
 	local xc,yc,ring_r,ring_w,sa,ea=setting['x'],setting['y'],setting['radius'],setting['thickness'],setting['start_angle'],setting['end_angle']
@@ -251,8 +257,8 @@ function draw_ring(cr,percent,setting)
 	cairo_stroke(cr)	   
 end
 
-function conky_clock_rings()
-	local function setup_rings(cr,pt)
+function conky_clock_rings(cr)
+	local function setup_rings(cr, pt)
 		local str=''
 		local value=0
 	   
@@ -263,13 +269,10 @@ function conky_clock_rings()
 		if value == nil then value = 0 end	 
 		local pct=value/pt['max']
 	   
-		draw_ring(cr,pct,pt)
+		draw_ring(cr, pct, pt)
 	end
 
 	if conky_window==nil then return end
-	cs=cairo_xlib_surface_create(conky_window.display, conky_window.drawable, conky_window.visual, conky_window.width, conky_window.height)
-	cr=cairo_create(cs)
-	conky_draw_bg(cr)
 
 	-- Check that Conky has been running for at least 5s
 	local updates=conky_parse('${updates}')
@@ -277,9 +280,10 @@ function conky_clock_rings()
    
 	if update_num>5 then
 		for i in pairs(settings_table) do
-			setup_rings(cr,settings_table[i])
+			setup_rings(cr, settings_table[i])
 		end
 	end
+
 end
 
 --new
