@@ -201,10 +201,12 @@ settings_table = {
 
 old_track_elapsed_time = ""
 
-corner_r=35
+corner_r = 35
 --bg_colour=0x000000
-bg_colour=0x210A01
-bg_alpha=0.5
+bg_colour = 0x210A01
+bg_alpha = 0.5
+cr = nil
+cs = nil
 
 require 'cairo'
 
@@ -212,8 +214,11 @@ function rgb_to_r_g_b(colour,alpha)
 	return ((colour / 0x10000) % 0x100) / 255., ((colour / 0x100) % 0x100) / 255., (colour % 0x100) / 255., alpha
 end
 
-function init_cairo()
+function conky_init_cairo()
 
+	cs=cairo_xlib_surface_create(conky_window.display, conky_window.drawable, conky_window.visual, conky_window.width, conky_window.height)
+   
+	cr=cairo_create(cs)
 
 
 end
@@ -240,8 +245,7 @@ function draw_ring(cr,percent,setting)
 	if positive_direction then
 		cairo_arc(cr,xc,yc,ring_r,angle_0,angle_0+t_arc)
 	else
-		--cairo_arc_negative(cr,xc,yc,ring_r,angle_0,angle_0+t_arc)
-	cairo_arc_negative(cr,xc,yc,ring_r,angle_f,angle_f-t_arc)
+		cairo_arc_negative(cr,xc,yc,ring_r,angle_f,angle_f-t_arc)
 	end
 	cairo_set_source_rgba(cr,rgb_to_r_g_b(fgc,fga))
 	cairo_stroke(cr)	   
@@ -261,13 +265,13 @@ function conky_clock_rings()
 	   
 		draw_ring(cr,pct,pt)
 	end
-	conky_draw_bg()
-	-- Check that Conky has been running for at least 5s
+
 	if conky_window==nil then return end
-	--local cs=cairo_xlib_surface_create(conky_window.display,conky_window.drawable,conky_window.visual, conky_window.width,conky_window.height)
-   
-	--local cr=cairo_create(cs)   
-   
+	cs=cairo_xlib_surface_create(conky_window.display, conky_window.drawable, conky_window.visual, conky_window.width, conky_window.height)
+	cr=cairo_create(cs)
+	conky_draw_bg(cr)
+
+	-- Check that Conky has been running for at least 5s
 	local updates=conky_parse('${updates}')
 	local update_num=tonumber(updates)
    
@@ -282,13 +286,11 @@ end
 -- Change these settings to affect your background.
 -- "corner_r" is the radius, in pixels, of the rounded corners. If you don't want rounded corners, use 0.
 
-function conky_draw_bg()
+function conky_draw_bg(cr)
 	if conky_window==nil then return end
 	local w=conky_window.width
 	local h=conky_window.height
-	local cs=cairo_xlib_surface_create(conky_window.display, conky_window.drawable, conky_window.visual, w, h)
-	cr=cairo_create(cs)
-   
+
 	cairo_move_to(cr,corner_r,0)
 	cairo_line_to(cr,w-corner_r,0)
 	cairo_curve_to(cr,w,0,w,0,w,corner_r)
