@@ -13,6 +13,8 @@ Changelog:
 + v1.0 -- Original release (30.09.2009)
 ]]
 
+-- Global Variables
+
 settings_table = {
    {
 			name='time',
@@ -197,12 +199,23 @@ settings_table = {
    },
 }
 
+old_track_elapsed_time = ""
 
+corner_r=35
+--bg_colour=0x000000
+bg_colour=0x210A01
+bg_alpha=0.5
 
 require 'cairo'
 
 function rgb_to_r_g_b(colour,alpha)
 	return ((colour / 0x10000) % 0x100) / 255., ((colour / 0x100) % 0x100) / 255., (colour % 0x100) / 255., alpha
+end
+
+function init_cairo()
+
+
+
 end
 
 function draw_ring(cr,percent,setting)
@@ -244,19 +257,19 @@ function conky_clock_rings()
 		
 		value=tonumber(str)
 		if value == nil then value = 0 end	 
-		pct=value/pt['max']
+		local pct=value/pt['max']
 	   
 		draw_ring(cr,pct,pt)
 	end
 	conky_draw_bg()
 	-- Check that Conky has been running for at least 5s
 	if conky_window==nil then return end
-	local cs=cairo_xlib_surface_create(conky_window.display,conky_window.drawable,conky_window.visual, conky_window.width,conky_window.height)
+	--local cs=cairo_xlib_surface_create(conky_window.display,conky_window.drawable,conky_window.visual, conky_window.width,conky_window.height)
    
-	local cr=cairo_create(cs)   
+	--local cr=cairo_create(cs)   
    
 	local updates=conky_parse('${updates}')
-	update_num=tonumber(updates)
+	local update_num=tonumber(updates)
    
 	if update_num>5 then
 		for i in pairs(settings_table) do
@@ -268,11 +281,6 @@ end
 --new
 -- Change these settings to affect your background.
 -- "corner_r" is the radius, in pixels, of the rounded corners. If you don't want rounded corners, use 0.
-
-corner_r=35
---bg_colour=0x000000
-bg_colour=0x210A01
-bg_alpha=0.5
 
 function conky_draw_bg()
 	if conky_window==nil then return end
@@ -313,7 +321,7 @@ function does_process_exists(name)
 	end
 end
 
-old_track_elapsed_time = ""
+
 --workaround as rhythmbox-client does not provide this information
 function rhythmbox_plays_pauses_stopped()
 	local current_track_elapsed_time = exec_shell("rhythmbox-client --print-playing-format %te")
@@ -329,7 +337,7 @@ end
 
 function conky_get_information_from_rhythmbox()
 	if does_process_exists("rhythmbox") then
-		rhythmbox_state = rhythmbox_plays_pauses_stopped()
+		local rhythmbox_state = rhythmbox_plays_pauses_stopped()
 		if rhythmbox_state == 0 then --it plays
 			local result = exec_shell("rhythmbox-client --print-playing-format \"%tt-\n%aa\"")
 			result = string.sub(result, 1, -2)
