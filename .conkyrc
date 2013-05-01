@@ -48,7 +48,7 @@ default_color 3E3E3E
 color1 3399FF
 color2 FFFFFF
 
-lua_load ~/.conky/big_rings.lua
+lua_load big_rings.lua
 #new
 lua_startup_hook draw_bg
 lua_draw_hook_pre clock_rings
