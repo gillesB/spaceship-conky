@@ -7,13 +7,5 @@ This seeting is based on a script by muzieca found on http://peppermintos.net/vi
 The used background Lua script was also created by londonali1010.
 
 ### Raise conky
-install xkeybind and add the following lines to the .xbindkeysrc.
-
-```
-"xset -r && path/to/raise_conky.sh"
-  mod4 + s
-
-"path/to/decrease_conky.sh && set r"
-  release + mod4 + s
-``` 
-xset -r and r is to disable and enable the autorepeat function of the keyboard. If it is disabled anyway, xset is not needed.
+Conky can be raised or decreased with the bash script toogle_conky.sh. This script raises Conky above every other window, if is below them and vice versa.
+Just add the script to your favourite keybinder (if your desktop environment does not provide one, you can use xbindkeys).
