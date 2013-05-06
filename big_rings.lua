@@ -204,7 +204,7 @@ old_track_elapsed_time = ""
 corner_r = 35
 --bg_colour=0x000000
 bg_colour = 0x210A01
-bg_alpha = 0.5
+bg_alpha = 0.65
 
 require 'cairo'
 
