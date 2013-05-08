@@ -286,7 +286,6 @@ function conky_clock_rings(cr)
 
 end
 
---new
 -- Change these settings to affect your background.
 -- "corner_r" is the radius, in pixels, of the rounded corners. If you don't want rounded corners, use 0.
 
