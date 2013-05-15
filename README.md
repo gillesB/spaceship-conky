@@ -13,3 +13,9 @@ Requires:
 
 Conky can be raised or decreased with the bash script toogle_conky.sh. This script raises Conky above every other window, if is below them and vice versa.
 Just add the script to your favourite keybinder (if your desktop environment does not provide one, you can use xbindkeys).
+
+#Screenshots
+##Normal
+![Spaceship Conky](/screenshots/spaceship-conky.png "Spaceship Conky")
+##Raised
+![Spaceship Conky](/screenshots/spaceship-conky_raised.png "Spaceship Conky")
