@@ -1,6 +1,9 @@
 spaceship-conky
 ==============
 
+#Warning
+The setting contains a memory leak. It will fill the memory and freeze the system. Only use it with caution. 
+
 #Short Description
 
 A [conky](http://conky.sourceforge.net/) setting, which should look like a spaceship HUD/cockpit.
