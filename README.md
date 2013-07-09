@@ -3,7 +3,7 @@ spaceship-conky
 
 #Warning
 On my system conky fills the swap and freezes the system after some time. Only use it with caution.  
-This seemes to be a conky or system setting problem. I tested this conky setting on two systemes and
+This seemes to be a conky or system setting problem. I tested this conky setting on two systems and
 the problem did not appear.  
 The system where the problem appears is a XUbuntu 12.04 with 3.5.0-18 Kernel.  
 The systems without problem are a Mint 15 with some 3.8 Kernel and a Lubuntu 12.10 with 3-5.0-24.  
