@@ -31,6 +31,7 @@ Download this repository. Change to the used folder and execute conky. This coul
 ```
 cd /a/folder/I/really/like
 git clone git@github.com:gillesB/spaceship-conky.git
+cd spaceship-conky
 conky -c ./conky.config
 ```
 **Pay Attention that you execute conky in the folder where both files (conky.config, big_rings.lua) reside.**
