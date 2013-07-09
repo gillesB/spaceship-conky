@@ -2,7 +2,9 @@ spaceship-conky
 ==============
 
 #Warning
-The setting contains a memory leak. It will fill the memory and freeze the system. Only use it with caution. 
+On my system conky fills the swap and freezes the system after some time. Only use it with caution.  
+This seemes to be a conky or system setting problem. I tested this conky setting on another system and
+the problem did not appear.
 
 #Short Description
 
